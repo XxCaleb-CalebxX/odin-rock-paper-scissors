@@ -1,69 +1,68 @@
 const options = ["rock" , "paper" , "scissors"];
+const results = document.querySelector(".results");
+const menu = document.querySelector(".player-options");
 
-function startGame() {
-    var score = 0;
-    var compScore = 0;
-    for (round = 1; round <= 10; round++) {
-        console.log("Round Number :" + round);
-        console.log("Your score: " + score + " Computer Score: "+ compScore);
+var player_score = 0;
+var comp_score = 0;
 
-        var playerChoice = prompt("Enter an option (Rock/Paper/Scissors) ");
-        playerChoice = playerChoice.trim().toLowerCase();
+menu.addEventListener('click' , function(event) {
+    updateScore(round(event.target.id));
 
+});
+
+
+function updateScore(winner) {
+    if (winner == "player") {player_score++} else if (winner == "computer") {comp_score++}
+    results.textContent = `${winner} won this round. The score is ${player_score} : ${comp_score}`;
+    if (player_score >= 5 || comp_score >=5) {
+    if (player_score > comp_score) {
+        results.textContent = `Player wins with ${player_score} points`
+    } else {results.textContent = `Computer wins with ${comp_score}`}
+}
+};
+
+
+function round(playerChoice) {
         var computerChoice = options[Math.floor(Math.random()*3 + 1) -1];
         console.log("Player chose " + playerChoice + ", Computer chose " + computerChoice);
 
         switch (playerChoice) {
             case "rock":
                 if (computerChoice == "scissors") {
-                    score++;
-                    alert("Player wins!");
-                    break;
+                    console.log("Player wins!");
+                    return "player";
                 } else if (computerChoice == "paper") {
-                    compScore++;
-                    alert("Computer wins!");
-                    break;
+                    console.log("Computer wins!");
+                    return "computer";
                 } else if (playerChoice == computerChoice) {
-                    alert("It was a tie!");
-                    break;
+                    console.log("It was a tie!");
+                    return "tie";
                 }
             
-            case "paper":
-                if (computerChoice == "rock") {
-                    score++;
-                    alert("Player wins!");
-                    break;
-                } else if (computerChoice == "scissors") {
-                    compScore++;
-                    alert("Computer wins!");
-                    break;
-                } else if (playerChoice == computerChoice) {
-                    alert("It was a tie!");
-                    break;
-                }
-
             case "scissors":
                 if (computerChoice == "paper") {
-                    score++;
-                    alert("Player wins!");
-                    break;
+                    console.log("Player wins!");
+                    return "player";
                 } else if (computerChoice == "rock") {
-                    compScore++;
-                    alert("Computer wins!");
-                    break;
+                    console.log("Computer wins!");
+                    return "computer";
                 } else if (playerChoice == computerChoice) {
-                    alert("It was a tie!");
-                    break;
+                    console.log("It was a tie!");
+                    return "computer";
+                }
+
+            case "paper":
+                if (computerChoice == "rock") {
+                    console.log("Player wins!");
+                    return "player";
+                } else if (computerChoice == "scissors") {
+                    console.log("Computer wins!");
+                    return "computer";
+                } else if (playerChoice == computerChoice) {
+                    console.log("It was a tie!");
+                    return "computer";
                 }
             
         }
 
-    }
-
-    if (compScore > score) {
-        alert("Your final score was "+score+", and Computer had" +compScore + "Computer wins!");
-
-    } else { alert("Your final score was "+score+", and Computer had " +compScore + ". You win!")}
 }; 
-
-startGame();
